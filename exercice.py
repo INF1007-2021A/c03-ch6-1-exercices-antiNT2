@@ -5,42 +5,101 @@
 def order(values: list = None) -> list:
     if values is None:
         # TODO: demander les valeurs ici
+        user_input = input("Veuillez entrer vos valeurs separees d'un espace \n")
+        values = user_input.split()
         pass
 
-    return []
+    values.sort()
+    print(values)
+    return values
 
 
 def anagrams(words: list = None) -> bool:
     if words is None:
-        # TODO: demander les mots ici
+        user_input = input("Veuillez entrer vos mots separes d'un espace \n")
+        words = user_input.split()
         pass
+   
+    if(sorted(words[0]) == sorted(words[1])):
+        print("Il s'agit d'un anagrame")
+        return True
 
+    print("Pas un anagramme")
     return False
 
 
 def contains_doubles(items: list) -> bool:
+    unique_elements_discovered = []
+
+    for itm in items:
+        if(itm in unique_elements_discovered):
+            return True
+        else:
+            unique_elements_discovered.append(itm)
+
     return False
 
 
 def best_grades(student_grades: dict) -> dict:
     # TODO: Retourner un dictionnaire contenant le nom de l'étudiant ayant la meilleure moyenne ainsi que sa moyenne
-    return {}
+    best_student = ""
+    best_average_grade = 0
+
+    for key in student_grades:
+        average_grade = sum(student_grades[key]) / 3
+        if(average_grade > best_average_grade):
+            best_average_grade = average_grade
+            best_student = key
+
+    output = {best_student: best_average_grade}
+    return output
 
 
 def frequence(sentence: str) -> dict:
     # TODO: Afficher les lettres les plus fréquentes
     #       Retourner le tableau de lettres
 
-    return {}
+    all_letters_frequency = {}
+
+    for letter in sentence:
+        if(letter != " " and letter != "."):
+            if(not(letter in all_letters_frequency)):
+                all_letters_frequency[letter] = 1
+            else:
+                all_letters_frequency[letter] += 1
+
+    frequent_letters_frequency = {}
+    for key in all_letters_frequency:
+        if(all_letters_frequency[key] >= 5):
+            frequent_letters_frequency[key] = all_letters_frequency[key]
+
+    sorted_keys = sorted(frequent_letters_frequency, key=frequent_letters_frequency.get, reverse=True)
+    output = {}
+    
+    for key in sorted_keys:
+        output[key] = frequent_letters_frequency[key]
+
+    print(output)
+    return output
 
 
 def get_recipes():
     # TODO: Demander le nom d'une recette, puis ses ingredients et enregistrer dans une structure de données
+    name = input("Veuillez entrer le nom de la recette \n")
+    ingredients = input("Veuillez entrer les ingredients separes par un espace \n").split()
+
+    return {name : ingredients}
     pass
 
 
 def print_recipe(ingredients) -> None:
     # TODO: Demander le nom d'une recette, puis l'afficher si elle existe
+    name = input("Veuillez entrer le nom de la recette \n")
+
+    if(name in ingredients):
+        print("Les ingredients necessaires sont " + ''.join(ing + " " for ing in ingredients[name]))
+    else:
+        print("Non.")
     pass
 
 
